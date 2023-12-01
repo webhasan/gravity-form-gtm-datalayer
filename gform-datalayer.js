@@ -70,7 +70,6 @@
                     });
 
                     if(!errorRquired) {
-                        console.log('Trigger for non ajax');
                         window.dataLayer = window.dataLayer || [];
                         dataLayer.push(Object.assign(gformData, {event: 'gravity_form_submit'}));
                     }
