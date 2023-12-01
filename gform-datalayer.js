@@ -20,7 +20,7 @@
                 if(isAjaxForm) {
                     formData.forEach(function (value, key) {
                         if(key) {
-                            var formattedKey = formId + '_' + key.replace('.', '_');
+                            var formattedKey = key.replace('.', '_') + '_fid_'+formId;
                             gformData[formattedKey] = value;
                         }
                     });
@@ -64,7 +64,7 @@
                                 }
                             }
 
-                            var formattedKey = formId + '_' + key.replace('.', '_');
+                            var formattedKey = key.replace('.', '_') + '_fid_'+formId;
                             gformData[formattedKey] = value;
                         }
                     });
