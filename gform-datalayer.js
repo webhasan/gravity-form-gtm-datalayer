@@ -37,27 +37,22 @@
                                 var isRequiredField = inputField.getAttribute('aria-required') === 'true';
 
                                 if(isRequiredField) {
-                                    console.log(inputField);
 
                                     if(inputField.tagName === 'SELECT') {
                                         var selectedOptionVal = inputField.options[inputField.selectedIndex].text;
                                         if(!selectedOptionVal) {
-                                            console.log('not work here', inputField);
                                             errorRequired = true;
                                         }
                                     }else if((inputField.getAttribute('type') === 'radio') || (inputField.getAttribute('type') === 'checkbox')) {
                                         var selectedRadioField = form.querySelector('[name="'+key+'"]:checked');
                                         if(!selectedRadioField) {
-                                            console.log('not work here', inputField);
                                             errorRequired = true;
                                         }
                                     }else if((inputField.getAttribute('type') === 'email') && (!value || !value.includes('@'))) {
-                                         console.log('not work here', inputField);
                                          errorRequired = true;
                                     }
                                     else {
                                         if(!value) {
-                                            console.log('not work here', inputField);
                                             errorRequired = true;
                                         } 
                                     }
@@ -87,7 +82,6 @@
             window.dataLayer = window.dataLayer || [];
 
             if(gformData && gformData.formId == formId) {
-                console.log('trigger from here');
                 dataLayer.push(Object.assign(gformData, {event: 'gravity_form_submit'}));
                 localStorage.removeItem('gFormData');
             }else {
