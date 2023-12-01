@@ -1,5 +1,5 @@
 # GTM DataLayer for Gravity Form Tracking with User Inputs
-## For Ajax / Non-Ajax both types of Gravity form 
+## For Ajax / Non-Ajax Both Types of Gravity Form 
 
 ### How to use 
 1. In Google Tag Manager, create a new tag as a custom HTML tag.
