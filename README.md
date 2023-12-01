@@ -1,4 +1,4 @@
-# GTM DataLayer for Gravity Form Tracking with User Inputs
+# GTM DataLayer for Gravity Form Tracking with All Inputs Values
 ## For Ajax / Non-Ajax Both Types of Gravity Form 
 
 ### How to use 
