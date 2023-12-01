@@ -20,56 +20,56 @@
                 if(isAjaxForm) {
                     formData.forEach(function (value, key) {
                         if(key) {
-                            var formatedKey = formId + '_' + key.replace('.', '_');
-                            gformData[formatedKey] = value;
+                            var formattedKey = formId + '_' + key.replace('.', '_');
+                            gformData[formattedKey] = value;
                         }
                     });
                     localStorage.removeItem('gFormData');
                     localStorage.setItem('gFormData', JSON.stringify(gformData));
                 }else {
-                     var errorRquired = false;
+                     var errorRequired = false;
 
                      formData.forEach(function (value, key) {
                         if(key) {
                             var inputField = form.querySelector('[name="'+key+'"]');
 
                             if(inputField) {
-                                var isRquiredField = inputField.getAttribute('aria-required') === 'true';
+                                var isRequiredField = inputField.getAttribute('aria-required') === 'true';
 
-                                if(isRquiredField) {
+                                if(isRequiredField) {
                                     console.log(inputField);
 
                                     if(inputField.tagName === 'SELECT') {
                                         var selectedOptionVal = inputField.options[inputField.selectedIndex].text;
                                         if(!selectedOptionVal) {
                                             console.log('not work here', inputField);
-                                            errorRquired = true;
+                                            errorRequired = true;
                                         }
                                     }else if((inputField.getAttribute('type') === 'radio') || (inputField.getAttribute('type') === 'checkbox')) {
                                         var selectedRadioField = form.querySelector('[name="'+key+'"]:checked');
                                         if(!selectedRadioField) {
                                             console.log('not work here', inputField);
-                                            errorRquired = true;
+                                            errorRequired = true;
                                         }
                                     }else if((inputField.getAttribute('type') === 'email') && (!value || !value.includes('@'))) {
                                          console.log('not work here', inputField);
-                                         errorRquired = true;
+                                         errorRequired = true;
                                     }
                                     else {
                                         if(!value) {
                                             console.log('not work here', inputField);
-                                            errorRquired = true;
+                                            errorRequired = true;
                                         } 
                                     }
                                 }
                             }
 
-                            var formatedKey = formId + '_' + key.replace('.', '_');
-                            gformData[formatedKey] = value;
+                            var formattedKey = formId + '_' + key.replace('.', '_');
+                            gformData[formattedKey] = value;
                         }
                     });
 
-                    if(!errorRquired) {
+                    if(!errorRequired) {
                         window.dataLayer = window.dataLayer || [];
                         dataLayer.push(Object.assign(gformData, {event: 'gravity_form_submit'}));
                     }
