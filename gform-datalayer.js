@@ -3,19 +3,18 @@
 * Email: webhasan24@gmail.com
 * Linkedin: https://linkedin.com/md-h
 * Website: https://leomeasure.com
-* Last Update: 07 Dec 2023
+* Last Update: 01 Dec 2023
 */
 
 (function($) {
     $(document).ready(function(){
-        var forms = document.querySelectorAll('form[id^="gform_"]');
-        forms.forEach(function(form) {
-            var formId = form.getAttribute('data-formid');
-            var isAjaxForm = form.getAttribute('target') === ('gform_ajax_frame_' + formId);
 
-            form.addEventListener('submit', function(event) {
-
-                var formData = new FormData(this);
+        document.addEventListener('submit', function(event) {
+            var form = event.target.closest('form[id^="gform_"]');
+            if(form) {
+                var formId = form.getAttribute('data-formid');
+                var isAjaxForm = form.getAttribute('target') === ('gform_ajax_frame_' + formId);
+                var formData = new FormData(form);
                 var gformData = {formId: formId};
 
                 if(isAjaxForm) {
@@ -59,6 +58,7 @@
                     });
 
                     var requiredCheckboxesRadio = form.querySelectorAll('.gfield--type-checkbox.gfield_contains_required, .gfield--type-radio.gfield_contains_required');
+
                     requiredCheckboxesRadio.forEach(function(fieldSet) {
                         if(fieldSet.querySelector('input[type="radio"]') || fieldSet.querySelector('input[type="checkbox"]')) {
                             if(!fieldSet.querySelector('input:checked')) {
@@ -67,15 +67,18 @@
                         }
                     });
 
+
                     if(!errorRequired) {
                         window.dataLayer = window.dataLayer || [];
+                        delete gformData['formId'];
                         delete gformData['state_1'];
-                        dataLayer.push({event: 'gravity_form_submit', inputs: gformData});
+                        delete gformData['version_hash'];
+                        dataLayer.push({event: 'gravity_form_submit', formId: formId, inputs: gformData});
                     }
                 }
-
-            });
+            }
         });
+
 
         $(document).on('gform_confirmation_loaded', function(event, formId){
             var gformData = localStorage.getItem('gFormData');
@@ -86,7 +89,9 @@
             window.dataLayer = window.dataLayer || [];
 
             if(gformData && gformData.formId == formId) {
+                delete gformData['formId'];
                 delete gformData['state_1'];
+                delete gformData['version_hash'];
                 dataLayer.push({event: 'gravity_form_submit', formId: formId, inputs: gformData});
                 localStorage.removeItem('gFormData');
             }else {
@@ -96,10 +101,3 @@
         });
     });
 })(jQuery);
-
-
-
-
-
-
-
