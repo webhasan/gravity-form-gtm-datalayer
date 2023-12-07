@@ -59,7 +59,6 @@
                     });
 
                     var requiredCheckboxesRadio = form.querySelectorAll('.gfield--type-checkbox.gfield_contains_required, .gfield--type-radio.gfield_contains_required');
-
                     requiredCheckboxesRadio.forEach(function(fieldSet) {
                         if(fieldSet.querySelector('input[type="radio"]') || fieldSet.querySelector('input[type="checkbox"]')) {
                             if(!fieldSet.querySelector('input:checked')) {
@@ -68,9 +67,9 @@
                         }
                     });
 
-
                     if(!errorRequired) {
                         window.dataLayer = window.dataLayer || [];
+                        delete gformData['state_1'];
                         dataLayer.push({event: 'gravity_form_submit', inputs: gformData});
                     }
                 }
@@ -87,6 +86,7 @@
             window.dataLayer = window.dataLayer || [];
 
             if(gformData && gformData.formId == formId) {
+                delete gformData['state_1'];
                 dataLayer.push({event: 'gravity_form_submit', formId: formId, inputs: gformData});
                 localStorage.removeItem('gFormData');
             }else {
