@@ -2,7 +2,8 @@
 * Author: Md Hasanuzzamna
 * Email: webhasan24@gmail.com
 * Linkedin: https://linkedin.com/md-h
-* Last Update: 01 Dec 2023
+* Website: https://leomeasure.com
+* Last Update: 07 Dec 2023
 */
 
 (function($) {
@@ -20,7 +21,7 @@
                 if(isAjaxForm) {
                     formData.forEach(function (value, key) {
                         if(key) {
-                            var formattedKey = key.replace('.', '_') + '_fid_'+formId;
+                            var formattedKey = key.replace('.', '_');
                             gformData[formattedKey] = value;
                         }
                     });
@@ -43,30 +44,34 @@
                                         if(!selectedOptionVal) {
                                             errorRequired = true;
                                         }
-                                    }else if((inputField.getAttribute('type') === 'radio') || (inputField.getAttribute('type') === 'checkbox')) {
-                                        var selectedRadioField = form.querySelector('[name="'+key+'"]:checked');
-                                        if(!selectedRadioField) {
-                                            errorRequired = true;
-                                        }
                                     }else if((inputField.getAttribute('type') === 'email') && (!value || !value.includes('@'))) {
                                          errorRequired = true;
                                     }
-                                    else {
-                                        if(!value) {
-                                            errorRequired = true;
-                                        } 
+                                    else if(!value) {
+                                        errorRequired = true;
                                     }
                                 }
                             }
 
-                            var formattedKey = key.replace('.', '_') + '_fid_'+formId;
+                            var formattedKey = key.replace('.', '_');
                             gformData[formattedKey] = value;
                         }
                     });
 
+                    var requiredCheckboxesRadio = form.querySelectorAll('.gfield--type-checkbox.gfield_contains_required, .gfield--type-radio.gfield_contains_required');
+
+                    requiredCheckboxesRadio.forEach(function(fieldSet) {
+                        if(fieldSet.querySelector('input[type="radio"]') || fieldSet.querySelector('input[type="checkbox"]')) {
+                            if(!fieldSet.querySelector('input:checked')) {
+                                errorRequired = true;
+                            }
+                        }
+                    });
+
+
                     if(!errorRequired) {
                         window.dataLayer = window.dataLayer || [];
-                        dataLayer.push(Object.assign(gformData, {event: 'gravity_form_submit'}));
+                        dataLayer.push({event: 'gravity_form_submit', inputs: gformData});
                     }
                 }
 
@@ -82,7 +87,7 @@
             window.dataLayer = window.dataLayer || [];
 
             if(gformData && gformData.formId == formId) {
-                dataLayer.push(Object.assign(gformData, {event: 'gravity_form_submit'}));
+                dataLayer.push({event: 'gravity_form_submit', formId: formId, inputs: gformData});
                 localStorage.removeItem('gFormData');
             }else {
                 dataLayer.push({event: 'gravity_form_submit', formId: formId});
@@ -91,3 +96,10 @@
         });
     });
 })(jQuery);
+
+
+
+
+
+
+
